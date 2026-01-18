@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/your-username/nginx-project.git'
+                git 'https://github.com/arunmgd/nginx-project.git'
             }
         }
 
