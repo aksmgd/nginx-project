@@ -10,7 +10,7 @@ pipeline {
             steps {
                 // Use your actual GitHub repo URL and credentialsId if private
                 git(
-                    url: 'https://github.com/arunmgd/nginx-project.git',
+                    url: 'https://github.com/aksmgd/nginx-project.git',
                     branch: 'main',
                     credentialsId: '39802547-1f4d-4d7f-9f12-a8a169ad56af'   // replace with your Jenkins credentials ID
                 )
