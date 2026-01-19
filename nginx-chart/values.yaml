@@ -1,6 +1,7 @@
 image:
   repository: nginx-app
   tag: latest
+  pullPolicy: IfNotPresent
 service:
   type: NodePort
   port: 80
