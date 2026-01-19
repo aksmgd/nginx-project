@@ -26,8 +26,8 @@ pipeline {
 
         stage('Deploy with Helm') {
             steps {
-                // Deploy using Helm chart
-                sh "helm upgrade --install nginx-app ./nginx-chart --set image.repository=nginx-app --set image.tag=latest"
+                 sh ''' helm upgrade --install nginx-app ./nginx-chart \ --set image.repository=nginx-app \ --set image.tag=latest \ --set image.pullPolicy=IfNotPresent '''// Deploy using Helm chart
+                
             }
         }
 
