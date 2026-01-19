@@ -3,10 +3,11 @@ kind: Service
 metadata:
   name: nginx-service
 spec:
-  type: {{ .Values.service.type }}
+  type: NodePort
+  selector: 
+    app: nginx-app 
   ports:
-  - port: {{ .Values.service.port }}
+  - port: 80
     targetPort: 80
-    nodePort: {{ .Values.service.nodePort }}
-  selector:
-    app: nginx-app
+    nodePort: 30080
+  
