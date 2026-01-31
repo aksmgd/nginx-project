@@ -12,7 +12,7 @@ pipeline {
                 git(
                     url: 'https://github.com/aksmgd/nginx-project.git',
                     branch: 'main',
-                    credentialsId: '39802547-1f4d-4d7f-9f12-a8a169ad56af'   // replace with your Jenkins credentials ID
+                    credentialsId: 'github-creds'   // replace with your Jenkins credentials ID
                 )
             }
         }
