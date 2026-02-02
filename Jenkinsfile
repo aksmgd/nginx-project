@@ -30,10 +30,16 @@ pipeline {
                     helm upgrade --install nginx-app ./nginx-chart \
                          --set image.repository=nginx-app \
                          --set image.tag=latest \
-                         --set image.pullPolicy=IfNotPresent 
-                 '''// Deploy using Helm chart
-                
+                         --set image.pullPolicy=IfNotPresent \
+                         --wait --timeout 60s
+                 '''               
             }
+        }
+        
+        stage('Wait for Pod Ready') { 
+            steps { 
+                sh "kubectl rollout status deployment/nginx-app --timeout=60s" 
+            } 
         }
 
         stage('Expose Service URL') {
