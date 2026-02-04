@@ -8,18 +8,18 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                // Use your actual GitHub repo URL and credentialsId if private
+                
                 git(
                     url: 'https://github.com/aksmgd/nginx-project.git',
                     branch: 'main',
-                    credentialsId: 'github-creds'   // replace with your Jenkins credentials ID
+                    credentialsId: 'github-creds'   
                 )
             }
         }
 
         stage('Build Docker Image in Minikube') {
             steps {
-                // Build inside Minikube’s Docker environment
+                
                 sh "eval \$(minikube docker-env) && docker build -t $DOCKER_IMAGE ."
             }
         }
@@ -44,7 +44,7 @@ pipeline {
 
         stage('Expose Service URL') {
             steps {
-                // Print the service URL
+                
                 sh "minikube service nginx-service --url"
             }
         }
