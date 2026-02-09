@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent { label 'minikube-agent' }  // Runs on your VM agent
 
     environment {
         DOCKER_IMAGE = "nginx-app:${BUILD_NUMBER}"
@@ -18,7 +18,10 @@ pipeline {
 
         stage('Build Docker Image in Minikube') {
             steps {
-                sh "eval \$(minikube docker-env) && docker build -t $DOCKER_IMAGE ."
+                sh '''
+                    eval $(minikube docker-env)
+                    docker build -t $DOCKER_IMAGE .
+                '''
             }
         }
 
@@ -45,6 +48,8 @@ pipeline {
             steps {
                 sh '''
                     echo "Application available at http://my-nginx/"
+                    echo "Ensure /etc/hosts has:"
+                    echo "$(minikube ip)  my-nginx"
                 '''
             }
         }
