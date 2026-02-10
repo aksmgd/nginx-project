@@ -47,9 +47,8 @@ pipeline {
         stage('Expose Ingress URL') {
             steps {
                 sh '''
-                    echo "Application available at http://my-nginx/"
-                    echo "Ensure /etc/hosts has:"
-                    echo "$(minikube ip)  my-nginx"
+                    echo "Application available at http://my-nginx.local/"
+                   
                 '''
             }
         }
