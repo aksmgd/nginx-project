@@ -1,6 +1,13 @@
+replicaCount: 1
+
+names:
+  deployment: nginx-app
+  service: nginx-app
+  ingress: nginx-app
+
 image:
   repository: nginx-app
-  tag: latest
+  tag: "latest"
   pullPolicy: IfNotPresent
 
 service:
@@ -8,7 +15,4 @@ service:
   port: 80
 
 ingress:
-  enabled: true
   host: my-nginx
-  path: /
-  pathType: Prefix
