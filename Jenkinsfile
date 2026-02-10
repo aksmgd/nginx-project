@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'minikube-agent' }  // Runs on your VM agent
+    agent { label 'minikube-agent' }  
 
     environment {
         DOCKER_IMAGE = "nginx-app:${BUILD_NUMBER}"
