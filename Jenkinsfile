@@ -32,7 +32,7 @@ pipeline {
                         --set image.repository=nginx-app \
                         --set image.tag=${BUILD_NUMBER} \
                         --set image.pullPolicy=IfNotPresent \
-                        --set ingress.host=my-nginx \
+                        --set ingress.host=my-nginx.local \
                         --wait --timeout 60s
                 '''
             }
