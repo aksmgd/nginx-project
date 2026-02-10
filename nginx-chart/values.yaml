@@ -15,4 +15,4 @@ service:
   port: 80
 
 ingress:
-  host: my-nginx
+  host: my-nginx.local
