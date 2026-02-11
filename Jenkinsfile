@@ -1,11 +1,21 @@
 pipeline {
-    agent any
+    agent { label 'minikube-agent' }  
 
     environment {
-        DOCKER_IMAGE = "aksmgd/nginx_dockerhub"   // replace with your DockerHub repo
+        DOCKER_IMAGE = "aksmgd/nginx_dockerhub"  
     }
 
     stages {
+        stage('Checkout') {
+            steps {
+                git(
+                    url: 'https://github.com/aksmgd/nginx-project.git',
+                    branch: 'main',
+                    credentialsId: 'github-creds'
+                )
+            }
+        }
+
         stage('Build Docker Image') {
             steps {
                 sh """
