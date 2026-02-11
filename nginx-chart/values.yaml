@@ -6,8 +6,8 @@ names:
   ingress: nginx-app
 
 image:
-  repository: nginx-app
-  tag: "latest"
+  repository: aksmgd/nginx_dockerhub   
+  tag: "latest"                            
   pullPolicy: IfNotPresent
 
 service:
