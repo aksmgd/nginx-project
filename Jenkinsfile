@@ -1,52 +1,39 @@
 pipeline {
-    agent { label 'minikube-agent' }  
+    agent any
 
     environment {
-        DOCKER_IMAGE = "nginx-app:${BUILD_NUMBER}"
+        DOCKER_IMAGE = "dockerhubusername/nginx-app"   // replace with your DockerHub repo
     }
 
     stages {
-        stage('Checkout') {
+        stage('Build Docker Image') {
             steps {
-                git(
-                    url: 'https://github.com/aksmgd/nginx-project.git',
-                    branch: 'main',
-                    credentialsId: 'github-creds'
-                )
+                sh """
+                    docker build -t $DOCKER_IMAGE:${BUILD_NUMBER} .
+                """
             }
         }
 
-        stage('Build Docker Image in Minikube') {
+        stage('Push to DockerHub') {
             steps {
-                sh '''
-                    eval $(minikube docker-env)
-                    docker build -t $DOCKER_IMAGE .
-                '''
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                    sh """
+                        echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
+                        docker push $DOCKER_IMAGE:${BUILD_NUMBER}
+                        docker logout
+                    """
+                }
             }
         }
 
         stage('Deploy with Helm') {
             steps {
-                sh '''
+                sh """
                     helm upgrade --install nginx-app ./nginx-chart \
+                        --set image.repository=$DOCKER_IMAGE \
                         --set image.tag=${BUILD_NUMBER} \
                         --wait --timeout 60s
-                '''
-            }
-        }
-
-        stage('Wait for Pod Ready') {
-            steps {
-                sh "kubectl rollout status deployment/nginx-app --timeout=60s"
-            }
-        }
-
-        stage('Expose Ingress URL') {
-            steps {
-                sh '''
-                    echo "Application available at http://my-nginx.local/"
-                   
-                '''
+                """
             }
         }
     }
