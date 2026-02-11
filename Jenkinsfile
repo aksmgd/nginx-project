@@ -29,10 +29,7 @@ pipeline {
             steps {
                 sh '''
                     helm upgrade --install nginx-app ./nginx-chart \
-                        --set image.repository=nginx-app \
                         --set image.tag=${BUILD_NUMBER} \
-                        --set image.pullPolicy=IfNotPresent \
-                        --set ingress.host=my-nginx.local \
                         --wait --timeout 60s
                 '''
             }
