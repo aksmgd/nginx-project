@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = "dockerhubusername/nginx-app"   // replace with your DockerHub repo
+        DOCKER_IMAGE = "aksmgd/nginx_dockerhub"   // replace with your DockerHub repo
     }
 
     stages {
